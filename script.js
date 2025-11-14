@@ -62,3 +62,26 @@ function validateConfirmPassword() {
     confirmPasswordError.textContent = ""
     return true
 }
+
+username.addEventListener("input", validateUsername)
+email.addEventListener("input", validateEmail)
+password.addEventListener("input", validatePassword)
+confirmPassword.addEventListener("input", validateConfirmPassword)
+form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const valid = validateConfirmPassword() & validateEmail() & validatePassword() & validateConfirmPassword()
+
+    if (valid) {
+        alert("Registration Successful")
+
+        localStorage.setItem("savedUsername", username.value)
+
+        form.reset()
+        return
+    }
+
+    if (!validateUsername()) username.focus()
+        else if (!validateEmail()) email.focus()
+            else if (!validatePassword()) password.focus()
+                else confirmPassword.focus()
+})
